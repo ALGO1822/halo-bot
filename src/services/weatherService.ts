@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type { WeatherResponse, VisualCrossingResponse } from '../types/weather.js';
-import config from "../config/config"
+import config from "../config/config.js"
 import { generateSarcasticRemark } from '../logic/sarcasticEngine.js';
 
 export class WeatherService {

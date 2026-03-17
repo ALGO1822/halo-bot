@@ -1,8 +1,8 @@
 import express from 'express';
 import { Telegraf } from 'telegraf';
-import { WeatherService } from '../src/services/weatherService';
-import config from '../src/config/config';
-import { escapeMarkdown } from '../src/utils/format';
+import { WeatherService } from '../src/services/weatherService.js';
+import config from '../src/config/config.js';
+import { escapeMarkdown } from '../src/utils/format.js';
 
 const app = express();
 const bot = new Telegraf(config.TELEGRAM_BOT_TOKEN);
