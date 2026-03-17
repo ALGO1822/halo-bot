@@ -12,18 +12,18 @@ app.get('/', (req, res) => res.send('✅ Sarcastic Bot is ALIVE! (Send a POST re
 
 bot.start((ctx) => {
     const firstName = ctx.from.username ?? ctx.from.first_name ?? "there";
-    const welcomeMessage = [
-        `👋 *Welcome to the Sarcastic Weather Bot, ${escapeMarkdown(firstName)}\\!*`,
+    const message = [
+        `👋 *Welcome to the Sarcastic Weather Bot, ${firstName}\\!*`,
         ``,
-        `I provide real-time weather updates with a side of unnecessary sass\\.`,
+        `I provide real\\-time weather updates with a side of unnecessary sass\\.`,
         ``,
         `📌 *How to use:*`,
-        `Just send me the name of any city (e.g., *Ikere* or *Lagos*) and I'll give you a vibe check\\.`,
+        `Just send me the name of any city \\(e.g\\., *Ikere* or *Lagos*\\) and I'll give you a vibe check\\.`,
         ``,
         `_Try not to get offended by my satellites\\._`
     ].join('\n');
 
-    return ctx.replyWithMarkdownV2(welcomeMessage);
+    return ctx.replyWithMarkdownV2(message);
 });
 
 bot.on('text', async (ctx) => {
