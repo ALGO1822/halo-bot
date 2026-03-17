@@ -38,6 +38,6 @@ bot.on('text', async (ctx) => {
 
 app.use(express.json());
 
-app.use(bot.webhookCallback('/api/index'));
+app.use(bot.webhookCallback('/'));
 
 export default app;
