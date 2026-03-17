@@ -1,0 +1,75 @@
+Building a project with **TypeScript** and **Vercel** is a fantastic choice for a final-year student. It shows you value **type safety** (fewer bugs) and **modern deployment patterns**.
+
+Since you are aiming for a **Second Class Upper**, your roadmap needs to include "Professional Touches" like environment variable management and clean directory structures.
+
+---
+
+## 🚀 Professional Project Roadmap: The "Sarcastic Weather" Bot
+
+### Phase 1: Environment & Bot Setup (Day 1)
+Before writing a single line of logic, you need to secure your credentials.
+* **Bot Registration:** Use `@BotFather` on Telegram to get your `TELEGRAM_BOT_TOKEN`.
+* **API Key:** Sign up for **OpenWeatherMap** (Current Weather Data) and get your API Key.
+* **Project Initialization:**
+    ```bash
+    mkdir weather-bot && cd weather-bot
+    npm init -y
+    npm install typescript @types/node ts-node -D
+    npx tsc --init
+    ```
+* **Dependencies:** Install `telegraf` (Telegram framework), `axios` (API calls), `dotenv`, and `express` (to handle the Vercel webhook).
+
+---
+
+### Phase 2: Architecture & Service Layer (Day 2)
+Focus on the "Clean Architecture" we discussed. Don't mix your "Sarcastic Logic" with your "Telegram Logic."
+* **Folder Structure:**
+    * `/api`: The entry point for Vercel (where your webhook lives).
+    * `/src/services`: `weatherService.ts` (API fetching).
+    * `/src/logic`: `sarcasticEngine.ts` (The funny text generator).
+    * `/src/types`: Define your Interfaces (e.g., `interface WeatherData { temp: number; ... }`).
+* **Coding the Service:** Create the `getWeather` function that returns a typed object.
+
+---
+
+### Phase 3: The "Sarcastic Engine" & Integration (Day 3)
+This is where the "Spice" happens. 
+* **Build the Engine:** Write the TypeScript function we discussed that maps weather codes and temperatures to funny remarks.
+* **Telegram Handler:** Set up the `bot.on('text')` listener.
+* **Local Testing:** Use **Polling** mode for now on your Dell XPS. 
+    > **Tip:** Use a tool like `nodemon` or `ts-node-dev` so the server restarts automatically when you save.
+
+---
+
+### Phase 4: Vercel & Webhook Deployment (Day 4)
+This is the transition from "Student Project" to "Live App."
+* **Refactor for Serverless:** Convert your Express app into a Vercel-friendly function in `/api/index.ts`.
+* **Webhook Switch:** Disable polling and implement:
+    ```typescript
+    bot.telegram.setWebhook('https://your-project.vercel.app/api/index');
+    ```
+* **Vercel Dashboard:** Push your code to GitHub, link it to Vercel, and **add your Environment Variables** (`BOT_TOKEN`, `WEATHER_KEY`) in the Vercel settings.
+
+---
+
+### Phase 5: Polishing & Documentation (Day 5)
+A great project isn't finished until the README is done.
+* **Error Handling:** Ensure the bot doesn't crash if a user enters a city like "Asgard" that doesn't exist. Return a funny error: *"Even Thor doesn't know where that is."*
+* **Markdown Formatting:** Use Telegram's Markdown to make the temperature bold and the sarcastic remark italicized.
+* **The README:** Include your **System Design Diagram** and instructions on how others can run it.
+
+---
+
+### Comparison of Dev Environment vs. Production
+
+
+| Step | Development (Local) | Production (Vercel) |
+| :--- | :--- | :--- |
+| **Execution** | `npm run dev` (Always running) | Serverless Function (Wakes up on request) |
+| **Connection** | Polling (Knocking) | Webhooks (The Phone Call) |
+| **Secrets** | `.env` file | Vercel Dashboard Variables |
+
+### Pro-Tip for your Dell XPS
+Since you’re using TypeScript, make sure your `tsconfig.json` has `"rootDir": "./src"` and `"outDir": "./dist"`. This keeps your project clean and professional.
+
+**Would you like me to provide the initial code for your `sarcasticEngine.ts` in TypeScript so you can start with a solid type-safe foundation?**
