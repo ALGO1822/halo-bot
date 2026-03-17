@@ -11,7 +11,7 @@ const weatherService = new WeatherService();
 app.get('/', (req, res) => res.send('✅ Sarcastic Bot is ALIVE! (Send a POST request via Telegram to talk)'));
 
 bot.start((ctx) => {
-    const firstName = ctx.from.first_name;
+    const firstName = ctx.from.username ?? ctx.from.first_name ?? "there";
     const welcomeMessage = [
         `👋 *Welcome to the Sarcastic Weather Bot, ${escapeMarkdown(firstName)}\\!*`,
         ``,
