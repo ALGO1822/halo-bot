@@ -40,6 +40,8 @@ bot.on('text', async (ctx) => {
 
 app.use(express.json());
 
-app.use(bot.webhookCallback('/'));
+app.post('/api/index', bot.webhookCallback('/api/index'));
+
+app.get('/api/index', (req, res) => res.send('✅ Webhook route is reachable!'));
 
 export default app;
