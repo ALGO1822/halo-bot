@@ -10,6 +10,22 @@ const weatherService = new WeatherService();
 
 app.get('/', (req, res) => res.send('✅ Sarcastic Bot is ALIVE! (Send a POST request via Telegram to talk)'));
 
+bot.start((ctx) => {
+    const firstName = ctx.from.first_name;
+    const welcomeMessage = [
+        `👋 *Welcome to the Sarcastic Weather Bot, ${escapeMarkdown(firstName)}\\!*`,
+        ``,
+        `I provide real-time weather updates with a side of unnecessary sass\\.`,
+        ``,
+        `📌 *How to use:*`,
+        `Just send me the name of any city (e.g., *Ikere* or *Lagos*) and I'll give you a vibe check\\.`,
+        ``,
+        `_Try not to get offended by my satellites\\._`
+    ].join('\n');
+
+    return ctx.replyWithMarkdownV2(welcomeMessage);
+});
+
 bot.on('text', async (ctx) => {
     const city = ctx.message.text;
     
