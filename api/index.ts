@@ -8,6 +8,8 @@ const app = express();
 const bot = new Telegraf(config.TELEGRAM_BOT_TOKEN);
 const weatherService = new WeatherService();
 
+app.get('/', (req, res) => res.send('✅ Sarcastic Bot is ALIVE! (Send a POST request via Telegram to talk)'));
+
 bot.on('text', async (ctx) => {
     const city = ctx.message.text;
     
