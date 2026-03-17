@@ -36,12 +36,14 @@ bot.on('text', async (ctx) => {
         const safeTemp = escapeMarkdown(data.temp);
         const safeWind = escapeMarkdown(data.windSpeed);
         const safeStatus = escapeMarkdown(data.description);
+        const safeHumidity = escapeMarkdown(data.humidity);
         const safeVibe = escapeMarkdown(data.sarcasticRemark);
 
         const message = [
             `🌍 *Weather in ${safeCity}*`,
             `🌡 *Temp:* ${safeTemp}°C`,
             `🌬 *Wind:* ${safeWind} km/h`,
+            `💧 *Humidity:* ${safeHumidity}%`,
             `☁️ *Status:* ${safeStatus}`,
             ``,
             `_${safeVibe}_`
