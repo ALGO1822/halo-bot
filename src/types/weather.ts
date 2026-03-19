@@ -7,6 +7,7 @@ export interface WeatherResponse {
     windSpeed: number;
     humidity: number;
     sarcasticRemark: string;
+    stickerId?: string | null;
 }
 
 export interface VisualCrossingResponse {

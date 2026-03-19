@@ -22,9 +22,12 @@ export class WeatherService {
                 humidity: today.humidity,
             };
 
+            const { message, stickerId } = generateSarcasticRemark(baseData);
+
             return {
                 ...baseData,
-                sarcasticRemark: generateSarcasticRemark(baseData)
+                sarcasticRemark: message,
+                stickerId
             };
         } catch (error: any) {
             if (error.response) {

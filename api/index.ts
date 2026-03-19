@@ -41,6 +41,10 @@ bot.on("text", async (ctx) => {
     const safeHumidity = escapeMarkdown(data.humidity);
     const safeVibe = escapeMarkdown(data.sarcasticRemark);
 
+    if (data.stickerId) {
+        await ctx.replyWithSticker(data.stickerId);
+    }
+
     const message = [
       `🌍 *Weather in ${safeCity}*`,
       `🌡 *Avg Temp:* ${safeTemp}°C`,
@@ -52,7 +56,6 @@ bot.on("text", async (ctx) => {
       ``,
       `_${safeVibe}_`,
     ].join("\n");
-    await ctx.replyWithSticker((data as any).stickerId!);
 
     await ctx.replyWithMarkdownV2(message);
   } catch (err: any) {
