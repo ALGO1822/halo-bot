@@ -73,7 +73,7 @@ const remarks = {
         "Nothing special happening today. Just a day.",
         "Conditions will stay stable. So will expectations.",
         "It's going to be fine. Not great, not terrible.",
-        "Weather will exist. That's the update."
+        "Weather exist. That's the update."
     ]
 };
 
