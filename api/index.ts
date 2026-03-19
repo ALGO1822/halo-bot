@@ -52,6 +52,7 @@ bot.on("text", async (ctx) => {
       ``,
       `_${safeVibe}_`,
     ].join("\n");
+    await ctx.replyWithSticker((data as any).stickerId!);
 
     await ctx.replyWithMarkdownV2(message);
   } catch (err: any) {

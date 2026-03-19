@@ -1,5 +1,17 @@
 import type { WeatherResponse } from '../types/weather.js'; 
 
+const stickers = {
+    hot: "CAACAgIAAxkBAAEQx3Npu6P2N943bzV2nsMiAQcR7hRn0QACagADlp-MDtZxZqMXQH8DOgQ", 
+    very_hot: "CAACAgIAAxkBAAEQx2dpu6HQqhpy6nY7FNK42naSAAFXwkgAAg8AA8A2TxMF6NSF8tQOnzoE",
+    rain: "CAACAgIAAxkBAAEQx2tpu6KD8UTyk_v17AdnGo2rVcgRSwACMgADJHFiGhrwA6rSATbpOgQ",
+    storm: "CAACAgIAAxkBAAEQx2tpu6KD8UTyk_v17AdnGo2rVcgRSwACMgADJHFiGhrwA6rSATbpOgQ",
+    windy: "CAACAgIAAxkBAAEQx3Fpu6NWcTLHR2Yz8gXSYfPYQDQAAQcAAiIJAAIYQu4IsJEOZWcMR6A6BA",
+    perfect: "CAACAgEAAxkBAAEQx29pu6MnA01yBmtx5FpgRMpE2m8cYAAC6wEAAjgOghGzhgTO4ZxJOToE",
+    cold: "CAACAgIAAxkBAAEQx3Fpu6NWcTLHR2Yz8gXSYfPYQDQAAQcAAiIJAAIYQu4IsJEOZWcMR6A6BA",
+    humid: "",
+    default: "CAACAgIAAxkBAAEQx3dpu6ceVGdE-Yi1VQLJnTddmOst8wACEAADlp-MDl8XjvT2TgL4OgQ"
+};
+
 const remarks = {
     storm: [
         "The sky is throwing hands. Stay indoors. ⚡",
@@ -66,7 +78,7 @@ const remarks = {
     ]
 };
 
-export const generateSarcasticRemark = (data: Partial<WeatherResponse>): string => {
+export const generateSarcasticRemark = (data: Partial<WeatherResponse>): { message: string; stickerId: string | null } => {
     let category: keyof typeof remarks = 'default';
 
     const desc = data.description?.toLowerCase() || '';
@@ -78,7 +90,7 @@ export const generateSarcasticRemark = (data: Partial<WeatherResponse>): string 
     if (desc.includes('storm') || desc.includes('thunder')) {
         category = 'storm';
     } else if (temp > 35) {
-        category = 'very_hot';
+        category = 'very_hot';          
     } else if (temp < 18) {
         category = 'cold';
     } else if (desc.includes('rain') || desc.includes('drizzle')) {
@@ -94,5 +106,10 @@ export const generateSarcasticRemark = (data: Partial<WeatherResponse>): string 
     }
 
     const list = remarks[category];
-    return list[Math.floor(Math.random() * list.length)]!;
+    const message = list[Math.floor(Math.random() * list.length)]!;
+
+    return {
+        message,
+        stickerId: stickers[category] || null
+    };
 };
