@@ -14,67 +14,66 @@ const stickers = {
 
 const remarks = {
     storm: [
-        "The sky is throwing hands. Stay indoors. ⚡",
-        "Thunder means go home. Immediately. ⛈️",
-        "Lightning is active. You are not immune.",
-        "If it's not urgent, it's not worth it today.",
-        "Nature is loud. You should be inside. 🌩️"
+        "The sky will be throwing hands later. Stay indoors. ⚡",
+        "Lightning is going to be active. You won't be immune.",
+        "If it's not urgent, it won't be worth it today.",
+        "Nature is going to be loud. You'll want to be inside. 🌩️"
     ],
     rain: [
-        "It's raining. Act accordingly. ☔",
-        "Umbrella recommended. Pride is optional.",
-        "Everything outside is now inconvenient.",
-        "This is a 'stay inside if you can' situation.",
+        "It's going to rain. Act accordingly. ☔",
+        "An umbrella will be recommended. Pride will be optional.",
+        "Everything outside is about to become inconvenient.",
+        "This is going to be a 'stay inside if you can' situation.",
         "You're going to get wet. Plan for it. 💧"
     ],
     very_hot: [
-        "It's extremely hot. Move carefully. 🔥",
-        "The sun is not your friend today.",
-        "You're basically cooking. Hydrate. 🥵",
-        "Outside is hostile. Stay in shade.",
-        "This is not a fashion day. It's survival."
+        "It's going to be extremely hot. Move carefully. 🔥",
+        "The sun won't be your friend today.",
+        "You'll basically be cooking later. Hydrate. 🥵",
+        "Outside will be hostile. Stay in the shade.",
+        "This won't be a fashion day. It'll be survival."
     ],
     hot: [
-        "It's hot. Keep movement to a minimum. ☀️",
-        "The air feels aggressive today.",
-        "Hydrate before your body files a complaint. 🚰",
-        "Shade is your best friend right now.",
-        "Outside requires preparation. Not vibes."
+        "It's going to be hot. Keep movement to a minimum. ☀️",
+        "The air will feel aggressive today.",
+        "Hydrate before your body files a complaint later. 🚰",
+        "Shade is going to be your best friend today.",
+        "Outside will require preparation. Not vibes."
     ],
     cold: [
-        "It's cold. Dress like you respect yourself. 🧥",
-        "Your body will complain. Listen to it.",
-        "Layer up or regret it later. ❄️",
-        "This is not a 'light outfit' kind of day.",
-        "Cold air, bad decisions pending."
+        "It's going to be cold. Dress like you respect yourself. 🧥",
+        "Your body will complain later. Listen to it.",
+        "Layer up or you'll regret it later. ❄️",
+        "This won't be a 'light outfit' kind of day.",
+        "Cold air incoming; bad decisions pending."
     ],
     windy: [
-        "It's windy. Secure your belongings. 🌬️",
-        "The air is moving with purpose today.",
+        "It will be windy. Secure your belongings. 🌬️",
+        "The air is going to move with purpose today.",
         "Hold onto your hat—and your plans.",
-        "Loose items are no longer yours.",
-        "Step outside carefully. The wind has plans."
+        "Loose items won't be yours for much longer.",
+        "Step outside carefully; the wind is going to have plans."
     ],
     humid: [
-        "Humidity is high. The air feels heavy. 🌫️",
+        "Humidity will be high. The air is going to feel heavy. 🌫️",
         "You're going to feel sticky. Accept it.",
-        "Breathing feels like effort today.",
-        "Your comfort has been revoked.",
-        "Everything feels damp. Everything."
+        "Breathing will feel like effort today.",
+        "Your comfort is about to be revoked.",
+        "Everything is going to feel damp. Everything."
     ],
     perfect: [
-        "Perfect weather. Don't waste it. 🌤️",
-        "This is a rare good day. Use it.",
-        "Go outside. Seriously.",
-        "No complaints today. Just go out.",
-        "Weather is good. Your excuse isn't."
+        "It's going to be perfect weather. Don't waste it. 🌤️",
+        "This will be a rare good day. Use it.",
+        "You'll want to go outside. Seriously.",
+        "There will be no complaints today. Just go out.",
+        "The weather will be good. Your excuse won't be."
     ],
     default: [
-        "The weather is average. Proceed normally.",
-        "Nothing special today. Just a day.",
-        "Conditions are stable. So are expectations.",
-        "It's fine. Not great, not terrible.",
-        "Weather exists. That's the update."
+        "The weather will be average. Proceed normally.",
+        "Nothing special happening today. Just a day.",
+        "Conditions will stay stable. So will expectations.",
+        "It's going to be fine. Not great, not terrible.",
+        "Weather will exist. That's the update."
     ]
 };
 
@@ -86,7 +85,6 @@ export const generateSarcasticRemark = (data: Partial<WeatherResponse>): { messa
     const wind = data.windSpeed ?? 0;
     const humidity = data.humidity ?? 0;
 
-    // Priority: Storm > Extreme Temp > Rain > Windy > Humid > Perfect > Default
     if (desc.includes('storm') || desc.includes('thunder')) {
         category = 'storm';
     } else if (temp > 35) {

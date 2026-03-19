@@ -1,11 +1,11 @@
 export interface WeatherResponse {
     city: string;
-    temp: number;
-    tempMax: number;
-    tempMin: number;
-    description: string;
-    windSpeed: number;
-    humidity: number;
+    temp: number; // Current Temperature
+    tempMax: number; // Daily High
+    tempMin: number; // Daily Low
+    description: string; // Current Condition
+    windSpeed: number; // Current Wind Speed
+    humidity: number; // Current Humidity
     sarcasticRemark: string;
     stickerId?: string | null;
 }
@@ -20,4 +20,11 @@ export interface VisualCrossingResponse {
         windspeed: number;
         humidity: number;
     }>;
+
+    currentConditions: {
+        temp: number;
+        conditions: string;
+        windspeed: number;
+        humidity: number;
+    };
 }
