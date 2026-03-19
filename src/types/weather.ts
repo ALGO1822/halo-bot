@@ -1,6 +1,8 @@
 export interface WeatherResponse {
     city: string;
     temp: number;
+    tempMax: number;
+    tempMin: number;
     description: string;
     windSpeed: number;
     humidity: number;
@@ -9,10 +11,12 @@ export interface WeatherResponse {
 
 export interface VisualCrossingResponse {
     resolvedAddress: string;
-    currentConditions: {
+    days: Array<{
+        tempmax: number;
+        tempmin: number;
         temp: number;
         conditions: string;
         windspeed: number;
         humidity: number;
-    }
+    }>;
 }

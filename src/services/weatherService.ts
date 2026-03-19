@@ -6,17 +6,21 @@ import { generateSarcasticRemark } from '../logic/sarcasticEngine.js';
 export class WeatherService {
     async getWeatherByCity(cityName: string): Promise<WeatherResponse> {
         try {
-            const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${cityName}/today?key=${config.VISUAL_CROSSING_API_KEY}&unitGroup=metric&include=current`
+            const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${cityName}/today?key=${config.VISUAL_CROSSING_API_KEY}&unitGroup=metric&include=days`
 
             const { data }: { data: VisualCrossingResponse } = await axios.get(url);
+            const today = data.days[0]!;
+
 
             const baseData = {
                 city: data.resolvedAddress,
-                temp: data.currentConditions.temp,
-                description: data.currentConditions.conditions ?? 'No description available',
-                windSpeed: data.currentConditions.windspeed,
-                humidity: data.currentConditions.humidity,
-            }
+                temp: today.temp, // Average temp for the day
+                tempMax: today.tempmax,
+                tempMin: today.tempmin,
+                description: today.conditions,
+                windSpeed: today.windspeed,
+                humidity: today.humidity,
+            };
 
             return {
                 ...baseData,
