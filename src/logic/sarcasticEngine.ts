@@ -9,7 +9,7 @@ const stickers = {
     perfect: "CAACAgEAAxkBAAEQx29pu6MnA01yBmtx5FpgRMpE2m8cYAAC6wEAAjgOghGzhgTO4ZxJOToE",
     cold: "CAACAgIAAxkBAAEQx3Fpu6NWcTLHR2Yz8gXSYfPYQDQAAQcAAiIJAAIYQu4IsJEOZWcMR6A6BA",
     humid: "CAACAgIAAxkBAAEQx3Npu6P2N943bzV2nsMiAQcR7hRn0QACagADlp-MDtZxZqMXQH8DOgQ",
-    default: "CAACAgIAAxkBAAEQx3dpu6ceVGdE-Yi1VQLJnTddmOst8wACEAADlp-MDl8XjvT2TgL4OgQ"
+    default: "CAACAgIAAxkBAAEQx4Jpu6tbuNohiYdJpczs-W9OpoYBVwACbwAD9wLID-kz_ZsHgo4yOgQ"
 };
 
 const remarks = {
