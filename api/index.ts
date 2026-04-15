@@ -1,5 +1,5 @@
 import express from "express";
-import { Telegraf } from "telegraf";
+import { Telegraf, Markup } from "telegraf";
 import { WeatherService } from "../src/services/weatherService.js";
 import config from "../src/config/config.js";
 import { escapeMarkdown } from "../src/utils/format.js";
@@ -23,14 +23,20 @@ bot.start((ctx) => {
     `Or send a city and be prepared.\n\n` +
     `Your choice.`;
 
-  return ctx.reply(welcomeMessage);
+  return ctx.reply(
+    welcomeMessage,
+    Markup.keyboard([
+      [Markup.button.locationRequest("📍 Send My Location")],
+    ]).resize().oneTime()
+  );
 });
 
-bot.on("text", async (ctx) => {
-  const city = ctx.message.text;
+bot.on("location", async (ctx) => {
+  const { latitude, longitude } = ctx.message.location;
+  const locationQuery = `${latitude},${longitude}`
 
   try {
-    const data = await weatherService.getWeatherByCity(city);
+    const data = await weatherService.getWeatherByCity(locationQuery);
 
     const safeCity = escapeMarkdown(data.city);
     const safeTemp = escapeMarkdown(data.temp);
@@ -60,7 +66,7 @@ bot.on("text", async (ctx) => {
     await ctx.replyWithMarkdownV2(message);
   } catch (err: any) {
     console.error("Telegram Error:", err.description || err.message);
-    await ctx.reply("Wait, where is that? Even my satellites are confused.");
+    await ctx.reply("Wait, where is that?");
   }
 });
 
