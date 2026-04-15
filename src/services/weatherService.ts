@@ -7,9 +7,36 @@ import config from "../config/config.js";
 import { generateSarcasticRemark } from "../logic/sarcasticEngine.js";
 
 export class WeatherService {
+  private async getCityName(query: string): Promise<string> {
+    // Check if the query is coordinates (contains a comma)
+    if (query.includes(",")) {
+      const [lat, lon] = query.split(",");
+      try {
+        // Nominatim API call (OpenStreetMap)
+        const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&addressdetails=1`;
+        const { data } = await axios.get(url, {
+          headers: { "User-Agent": "HaloWeatherBot/1.0" }, // Nominatim requires a User-Agent
+        });
+
+        // Pick the most relevant name (city, town, or village)
+        return (
+          data.address.city ||
+          data.address.town ||
+          data.address.village ||
+          data.display_name
+        );
+      } catch (error) {
+        console.error("Reverse Geocoding failed, falling back to coords");
+        return query; // Fallback to raw coords if Nominatim fails
+      }
+    }
+    return query; // If it's already a city name, just return it
+  }
+
   async getWeatherByCity(cityName: string): Promise<WeatherResponse> {
     try {
-      const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${cityName}/today?key=${config.VISUAL_CROSSING_API_KEY}&unitGroup=metric&include=days,current`;
+      const resolvedName = await this.getCityName(cityName);
+      const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${resolvedName}/today?key=${config.VISUAL_CROSSING_API_KEY}&unitGroup=metric&include=days,current`;
 
       const { data }: { data: VisualCrossingResponse } = await axios.get(url);
       const todayForecast = data.days[0]!;
