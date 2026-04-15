@@ -8,9 +8,10 @@ import { generateSarcasticRemark } from "../logic/sarcasticEngine.js";
 
 export class WeatherService {
   private async getCityName(query: string): Promise<string> {
+    const cleanQuery = query.trim();
     // Check if the query is coordinates (contains a comma)
-    if (query.includes(",")) {
-      const [lat, lon] = query.split(",");
+    if (cleanQuery.includes(",")) {
+      const [lat, lon] = cleanQuery.split(",").map((c) => c.trim());
       try {
         // Nominatim API call (OpenStreetMap)
         const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&addressdetails=1`;
@@ -19,26 +20,36 @@ export class WeatherService {
         });
 
         // Pick the most relevant name (city, town, or village)
-        return (
+        const city =
           data.address.city ||
           data.address.town ||
           data.address.village ||
-          data.display_name
-        );
+          data.address.suburb ||
+          data.address.county;
+
+        // If a specific city isn't found, use the first part of the display name
+        return city || data.display_name.split(",")[0];
       } catch (error) {
-        console.error("Reverse Geocoding failed, falling back to coords");
-        return query; // Fallback to raw coords if Nominatim fails
+        console.error("Reverse Geocoding failed:", error);
+        return cleanQuery; // Fallback to raw coords
       }
     }
-    return query; // If it's already a city name, just return it
+    return cleanQuery;
   }
 
   async getWeatherByCity(cityName: string): Promise<WeatherResponse> {
     try {
       const resolvedName = await this.getCityName(cityName);
-      const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${resolvedName}/today?key=${config.VISUAL_CROSSING_API_KEY}&unitGroup=metric&include=days,current`;
+
+      const encodedName = encodeURIComponent(resolvedName);
+      const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodedName}/today?key=${config.VISUAL_CROSSING_API_KEY}&unitGroup=metric&include=days,current`;
 
       const { data }: { data: VisualCrossingResponse } = await axios.get(url);
+
+      if (!data.days || data.days.length === 0 || !data.currentConditions) {
+        throw new Error("Location found, but no weather data available.");
+      }
+      
       const todayForecast = data.days[0]!;
       const current = data.currentConditions;
 
