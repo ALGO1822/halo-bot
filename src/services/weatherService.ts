@@ -37,12 +37,14 @@ export class WeatherService {
     return cleanQuery;
   }
 
-  async getWeatherByCity(cityName: string): Promise<WeatherResponse> {
+  async getWeatherByCity(query: string): Promise<WeatherResponse> {
     try {
-      const resolvedName = await this.getCityName(cityName);
+      const resolvedAddressName = await this.getCityName(query);
 
-      const encodedName = encodeURIComponent(resolvedName);
-      const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodedName}/today?key=${config.VISUAL_CROSSING_API_KEY}&unitGroup=metric&include=days,current`;
+      const apiTarget = query.includes(",") ? query.replace(/\s+/g, '') : resolvedAddressName;
+      const encodedTarget = encodeURIComponent(apiTarget);
+
+      const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodedTarget}/today?key=${config.VISUAL_CROSSING_API_KEY}&unitGroup=metric&include=days,current`;
 
       const { data }: { data: VisualCrossingResponse } = await axios.get(url);
 
@@ -72,7 +74,7 @@ export class WeatherService {
       const currentSticker = generateSarcasticRemark(currentData).stickerId;
 
       return {
-        city: data.resolvedAddress,
+        city: resolvedAddressName,
         ...currentData,
         ...dailyExtremes,
         sarcasticRemark: dailyVibe.message,
